@@ -1,4 +1,4 @@
-package cn.yeshaoting.sd;
+package cn.yeshaoting.sd.concurrent;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.lang3.tuple.Triple;

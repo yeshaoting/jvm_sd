@@ -1,4 +1,4 @@
-package cn.yeshaoting.sd;
+package cn.yeshaoting.sd.concurrent;
 
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
