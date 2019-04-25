@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public class MakeOOM {
+public class MakeOutOfMemory {
 
     public static void main(String[] args) throws InterruptedException {
         List<Byte[]> all = Lists.newArrayList();
@@ -12,7 +12,7 @@ public class MakeOOM {
         for (; ; ) {
             Byte[] bytes = new Byte[8 * 1024 * 1024];
             all.add(bytes);
-            Thread.sleep(5000);
+            Thread.sleep(10000);
             cnt++;
             System.out.println("cnt=" + cnt);
         }
