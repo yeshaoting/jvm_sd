@@ -82,29 +82,18 @@ class Singleton {
         return dcl;
     }
 
+    // 外界拿到的都是同一个实例，但是不能保证类不被多次初始化
     public static Singleton getInstance5() {
         for (; ; ) {
-            boolean casV = flag.get();
-            if (casV) {
-                return safe;
+            Singleton singleton = cas.get();
+            if (null != singleton) {
+                return singleton;
             }
 
-            if (flag.compareAndSet(casV, true)) {
-                if (flag.get()) {
-                    return safe;
-                }
-                continue;
+            singleton = new Singleton();
+            if (cas.compareAndSet(null, singleton)) {
+                return singleton;
             }
-
-//            Singleton singleton = INSTANCE.get();
-//            if (null != singleton) {
-//                return singleton;
-//            }
-//
-//            singleton = new Singleton();
-//            if (INSTANCE.compareAndSet(null, singleton)) {
-//                return singleton;
-//            }
         }
     }
 
