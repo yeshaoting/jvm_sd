@@ -23,6 +23,9 @@ class ZeroEvenOdd {
     public void zero(IntConsumer printNumber) throws InterruptedException {
         for (int i = 0; i < n; i++) {
             casGet(0);
+            if (current > n) {
+                return;
+            }
 
             printNumber.accept(0);
             lock = current % 2 == 1 ? 1 : 2;
@@ -32,6 +35,9 @@ class ZeroEvenOdd {
     public void odd(IntConsumer printNumber) throws InterruptedException {
         for (int i = 0; i < n / 2 + 1; i++) {
             casGet(1);
+            if (current > n) {
+                return;
+            }
 
             printNumber.accept(current);
             current++;
@@ -42,6 +48,9 @@ class ZeroEvenOdd {
     public void even(IntConsumer printNumber) throws InterruptedException {
         for (int i = 0; i < n / 2; i++) {
             casGet(2);
+            if (current > n) {
+                return;
+            }
 
             printNumber.accept(current);
             current++;
@@ -51,7 +60,7 @@ class ZeroEvenOdd {
 
     private void casGet(int except) {
         for (; ; ) {
-            if (lock % 3 == except)
+            if (current > n || lock % 3 == except)
                 return;
         }
     }
@@ -61,7 +70,6 @@ class IntConsumerService implements IntConsumer {
 
     @Override
     public void accept(int value) {
-//        System.out.println(value);
         System.out.print(value);
     }
 }
@@ -69,7 +77,7 @@ class IntConsumerService implements IntConsumer {
 public class Solution1116 extends ValueMainClass {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        int n = 8;
+        int n = 51;
         ZeroEvenOdd handler = new ZeroEvenOdd(n);
 
         new Thread(new Runnable() {
