@@ -10,14 +10,14 @@ import java.util.function.IntConsumer;
     author: yeshaoting
     time: 2019-08-11 19:46
 */
-class ZeroEvenOdd {
+class Solution1116_A {
     private int n;
 
     // 当前要输出的非0整数
     private volatile int current = 1;
     private volatile int lock = 0;
 
-    public ZeroEvenOdd(int n) {
+    public Solution1116_A(int n) {
         this.n = n;
     }
 
@@ -68,7 +68,7 @@ class ZeroEvenOdd {
     }
 }
 
-class ZeroEvenOdd2 {
+class Solution1116_B {
     private int n;
 
     private volatile int current = 1;
@@ -79,7 +79,7 @@ class ZeroEvenOdd2 {
     private Condition oddCondition = lock.newCondition();
     private Condition evenCondition = lock.newCondition();
 
-    public ZeroEvenOdd2(int n) {
+    public Solution1116_B(int n) {
         this.n = n;
     }
 
@@ -135,7 +135,7 @@ class ZeroEvenOdd2 {
 
 }
 
-class ZeroEvenOdd3 {
+class Solution1116_C {
     private int n;
 
     private volatile int idx = 0;
@@ -143,7 +143,7 @@ class ZeroEvenOdd3 {
     private ReentrantLock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
 
-    public ZeroEvenOdd3(int n) {
+    public Solution1116_C(int n) {
         this.n = n;
     }
 
@@ -205,11 +205,13 @@ class IntConsumerService implements IntConsumer {
     }
 }
 
-public class Solution1116 extends ValueMainClass {
+public class Topic1116 extends ValueMainClass {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         int n = 9;
-        ZeroEvenOdd3 handler = new ZeroEvenOdd3(n);
+//        Solution1116_A handler = new Solution1116_A(n);
+//        Solution1116_B handler = new Solution1116_B(n);
+        Solution1116_C handler = new Solution1116_C(n);
 
         new Thread(new Runnable() {
             @Override

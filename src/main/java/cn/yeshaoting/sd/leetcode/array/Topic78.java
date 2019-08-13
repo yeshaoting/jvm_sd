@@ -4,14 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-class Solution78 extends ArrayMainClass {
-
-    public static void main(String[] args) throws IOException {
-        int[] nums = stringToIntegerArray("[1,2,3]");
-        List<List<Integer>> ret = new Solution78().subsets(nums);
-        String out = int2dListToString(ret);
-        System.out.print(out);
-    }
+class Solution78_A {
 
     // 迭代法
     public List<List<Integer>> subsets(int[] nums) {
@@ -31,5 +24,16 @@ class Solution78 extends ArrayMainClass {
 
         return all;
     }
+}
+
+public class Topic78 extends ArrayMainClass {
+
+    public static void main(String[] args) throws IOException {
+        int[] nums = stringToIntegerArray("[1,2,3]");
+        List<List<Integer>> ret = new Solution78_A().subsets(nums);
+        String out = int2dListToString(ret);
+        System.out.print(out);
+    }
 
 }
+
