@@ -71,7 +71,6 @@ class Solution1116_A {
 class Solution1116_B {
     private int n;
 
-    private volatile int current = 1;
     private volatile int idx = 0;
 
     private ReentrantLock lock = new ReentrantLock();
@@ -92,7 +91,7 @@ class Solution1116_B {
             }
 
             printNumber.accept(0);
-            if (current % 2 == 1) { // 奇数
+            if (i % 2 == 0) { // 奇数
                 idx = 1;
                 oddCondition.signal();
             } else {
@@ -110,8 +109,7 @@ class Solution1116_B {
                 oddCondition.await();
             }
 
-            printNumber.accept(current);
-            current++;
+            printNumber.accept(i + 1);
             idx = 0;
             zeroCondition.signal();
         }
@@ -125,8 +123,7 @@ class Solution1116_B {
                 evenCondition.await();
             }
 
-            printNumber.accept(current);
-            current++;
+            printNumber.accept(i + 1);
             idx = 0;
             zeroCondition.signal();
         }
@@ -210,8 +207,8 @@ public class Topic1116 extends ValueMainClass {
     public static void main(String[] args) throws IOException, InterruptedException {
         int n = 9;
 //        Solution1116_A handler = new Solution1116_A(n);
-//        Solution1116_B handler = new Solution1116_B(n);
-        Solution1116_C handler = new Solution1116_C(n);
+        Solution1116_B handler = new Solution1116_B(n);
+//        Solution1116_C handler = new Solution1116_C(n);
 
         new Thread(new Runnable() {
             @Override

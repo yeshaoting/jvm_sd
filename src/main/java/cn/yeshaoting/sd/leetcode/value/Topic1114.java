@@ -14,8 +14,9 @@ public class Topic1114 {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 //        Solution1114_A handler = new Solution1114_A();
-//        Solution1114_B handler = new Solution1114_B();
-        Solution1114_C handler = new Solution1114_C();
+        Solution1114_B handler = new Solution1114_B();
+//        Solution1114_C handler = new Solution1114_C();
+//        Solution1114_D handler = new Solution1114_D();
 
         new Thread(() -> {
             try {
@@ -127,39 +128,96 @@ class Solution1114_B {
 
 class Solution1114_C {
 
-    private ReentrantLock lock = new ReentrantLock();
-    private Condition secondC = lock.newCondition();
-    private Condition thirdC = lock.newCondition();
+    private Object lock = new Object();
+    private volatile int state = 0;
 
     public Solution1114_C() {
 
     }
 
     public void first(Runnable printFirst) throws InterruptedException {
-//        lock.lock();
+        synchronized (lock) {
+
+            // printFirst.run() outputs "first". Do not change or remove this line.
+            printFirst.run();
+
+            state++;
+            lock.notifyAll();
+        }
+    }
+
+    public void second(Runnable printSecond) throws InterruptedException {
+        synchronized (lock) {
+            if (state != 1) {
+                lock.wait();
+            }
+
+            // printSecond.run() outputs "second". Do not change or remove this line.
+            printSecond.run();
+
+            state++;
+            lock.notifyAll();
+        }
+    }
+
+    public void third(Runnable printThird) throws InterruptedException {
+        synchronized (lock) {
+            if (state != 2) {
+                lock.wait();
+            }
+
+            // printThird.run() outputs "third". Do not change or remove this line.
+            printThird.run();
+
+            state++;
+            lock.notifyAll();
+        }
+    }
+
+}
+
+class Solution1114_D {
+
+    private volatile int state = 0;
+
+    private ReentrantLock lock = new ReentrantLock();
+    private Condition secondC = lock.newCondition();
+    private Condition thirdC = lock.newCondition();
+
+    public Solution1114_D() {
+
+    }
+
+    public void first(Runnable printFirst) throws InterruptedException {
+        lock.lock();
 
         // printFirst.run() outputs "first". Do not change or remove this line.
         printFirst.run();
-        Thread.sleep(1000);
 
+        state = 1;
         secondC.signal();
-//        lock.unlock();
+        lock.unlock();
     }
 
     public void second(Runnable printSecond) throws InterruptedException {
         lock.lock();
-        secondC.await();
+        if (state != 1) {
+            secondC.await();
+        }
 
         // printSecond.run() outputs "second". Do not change or remove this line.
         printSecond.run();
 
+        state = 2;
         thirdC.signal();
         lock.unlock();
     }
 
     public void third(Runnable printThird) throws InterruptedException {
         lock.lock();
-        thirdC.await();
+        if (state != 2) {
+            thirdC.await();
+        }
 
         // printThird.run() outputs "third". Do not change or remove this line.
         printThird.run();
