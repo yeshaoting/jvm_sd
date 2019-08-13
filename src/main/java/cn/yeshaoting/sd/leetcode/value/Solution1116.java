@@ -1,6 +1,8 @@
 package cn.yeshaoting.sd.leetcode.value;
 
 import java.io.IOException;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.IntConsumer;
 
 /*
@@ -66,6 +68,73 @@ class ZeroEvenOdd {
     }
 }
 
+class ZeroEvenOdd2 {
+    private int n;
+
+    private volatile int current = 1;
+    private volatile int idx = 0;
+
+    private ReentrantLock lock = new ReentrantLock();
+    private Condition zeroCondition = lock.newCondition();
+    private Condition oddCondition = lock.newCondition();
+    private Condition evenCondition = lock.newCondition();
+
+    public ZeroEvenOdd2(int n) {
+        this.n = n;
+    }
+
+    // printNumber.accept(x) outputs "x", where x is an integer.
+    public void zero(IntConsumer printNumber) throws InterruptedException {
+        lock.lock();
+        for (int i = 0; i < n; i++) {
+            if (idx != 0) {
+                zeroCondition.await();
+            }
+
+            printNumber.accept(0);
+            if (current % 2 == 1) { // 奇数
+                idx = 1;
+                oddCondition.signal();
+            } else {
+                idx = 2;
+                evenCondition.signal();
+            }
+        }
+        lock.unlock();
+    }
+
+    public void odd(IntConsumer printNumber) throws InterruptedException {
+        lock.lock();
+        for (int i = 0; i < n; i = i + 2) {
+            if (idx != 1) {
+                oddCondition.await();
+            }
+
+            printNumber.accept(current);
+            current++;
+            idx = 0;
+            zeroCondition.signal();
+        }
+        lock.unlock();
+    }
+
+    public void even(IntConsumer printNumber) throws InterruptedException {
+        lock.lock();
+        for (int i = 1; i < n; i = i + 2) {
+            if (idx != 2) {
+                evenCondition.await();
+            }
+
+            printNumber.accept(current);
+            current++;
+            idx = 0;
+            zeroCondition.signal();
+        }
+        lock.unlock();
+    }
+
+}
+
 class IntConsumerService implements IntConsumer {
 
     @Override
@@ -77,8 +146,8 @@ class IntConsumerService implements IntConsumer {
 public class Solution1116 extends ValueMainClass {
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        int n = 51;
-        ZeroEvenOdd handler = new ZeroEvenOdd(n);
+        int n = 9;
+        ZeroEvenOdd2 handler = new ZeroEvenOdd2(n);
 
         new Thread(new Runnable() {
             @Override
