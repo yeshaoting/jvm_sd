@@ -13,37 +13,42 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Topic1114 {
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        for (int i = 0; i < 1; i++) {
 //        Solution1114_A handler = new Solution1114_A();
-        Solution1114_B handler = new Solution1114_B();
-//        Solution1114_C handler = new Solution1114_C();
+//            Solution1114_B handler = new Solution1114_B();
+//            Solution1114_C handler = new Solution1114_C();
 //        Solution1114_D handler = new Solution1114_D();
+            Solution1114_E handler = new Solution1114_E();
 
-        new Thread(() -> {
-            try {
-                handler.first(() -> System.out.println("first"));
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
+            new Thread(() -> {
+                try {
+                    handler.third(() -> System.out.println("third"));
+                } catch (InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
 
-        }, "a").start();
+            }, "third").start();
+            Thread.sleep(10);
 
-        new Thread(() -> {
-            try {
-                handler.second(() -> System.out.println("second"));
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
+            new Thread(() -> {
+                try {
+                    handler.second(() -> System.out.print("second"));
+                } catch (InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
 
-        }, "b").start();
+            }, "second").start();
+            Thread.sleep(10);
 
-        new Thread(() -> {
-            try {
-                handler.third(() -> System.out.println("third"));
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
+            new Thread(() -> {
+                try {
+                    handler.first(() -> System.out.print("first"));
+                } catch (InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
 
-        }, "c").start();
+            }, "first").start();
+        }
     }
 
 }
@@ -57,20 +62,20 @@ class Solution1114_A {
 
     }
 
-    public void first(Runnable printFirst) throws InterruptedException {
-        casGet(0);
-
-        // printFirst.run() outputs "first". Do not change or remove this line.
-        printFirst.run();
-
-        lock++;
-    }
-
     public void second(Runnable printSecond) throws InterruptedException {
         casGet(1);
 
         // printSecond.run() outputs "second". Do not change or remove this line.
         printSecond.run();
+
+        lock++;
+    }
+
+    public void first(Runnable printFirst) throws InterruptedException {
+        casGet(0);
+
+        // printFirst.run() outputs "first". Do not change or remove this line.
+        printFirst.run();
 
         lock++;
     }
@@ -95,7 +100,8 @@ class Solution1114_A {
 
 class Solution1114_B {
 
-    private Semaphore lock = new Semaphore(0);
+    private Semaphore secondLock = new Semaphore(0);
+    private Semaphore thirdLock = new Semaphore(0);
 
     public Solution1114_B() {
 
@@ -105,20 +111,20 @@ class Solution1114_B {
         // printFirst.run() outputs "first". Do not change or remove this line.
         printFirst.run();
 
-        lock.release();
+        secondLock.release();
     }
 
     public void second(Runnable printSecond) throws InterruptedException {
-        lock.acquire();
+        secondLock.acquire();
 
         // printSecond.run() outputs "second". Do not change or remove this line.
         printSecond.run();
 
-        lock.release(2);
+        thirdLock.release(1);
     }
 
     public void third(Runnable printThird) throws InterruptedException {
-        lock.acquire(2);
+        thirdLock.acquire(1);
 
         // printThird.run() outputs "third". Do not change or remove this line.
         printThird.run();
@@ -148,7 +154,7 @@ class Solution1114_C {
 
     public void second(Runnable printSecond) throws InterruptedException {
         synchronized (lock) {
-            if (state != 1) {
+            while (state != 1) {
                 lock.wait();
             }
 
@@ -162,7 +168,7 @@ class Solution1114_C {
 
     public void third(Runnable printThird) throws InterruptedException {
         synchronized (lock) {
-            if (state != 2) {
+            while (state != 2) {
                 lock.wait();
             }
 
@@ -178,7 +184,7 @@ class Solution1114_C {
 
 class Solution1114_D {
 
-    private volatile int state = 0;
+    private int state = 0;
 
     private ReentrantLock lock = new ReentrantLock();
     private Condition secondC = lock.newCondition();
@@ -223,6 +229,40 @@ class Solution1114_D {
         printThird.run();
 
         lock.unlock();
+    }
+
+}
+
+// 有问题版本
+class Solution1114_E {
+
+    private Semaphore lock = new Semaphore(0);
+
+    public Solution1114_E() {
+
+    }
+
+    public void first(Runnable printFirst) throws InterruptedException {
+        // printFirst.run() outputs "first". Do not change or remove this line.
+        printFirst.run();
+
+        lock.release();
+    }
+
+    public void second(Runnable printSecond) throws InterruptedException {
+        lock.acquire();
+
+        // printSecond.run() outputs "second". Do not change or remove this line.
+        printSecond.run();
+
+        lock.release(2);
+    }
+
+    public void third(Runnable printThird) throws InterruptedException {
+        lock.acquire(2);
+
+        // printThird.run() outputs "third". Do not change or remove this line.
+        printThird.run();
     }
 
 }
