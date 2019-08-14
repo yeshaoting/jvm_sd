@@ -202,7 +202,7 @@ class IntConsumerService implements IntConsumer {
     }
 }
 
-public class Topic1116 extends ValueMainClass {
+public class Topic1116 {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         int n = 9;
