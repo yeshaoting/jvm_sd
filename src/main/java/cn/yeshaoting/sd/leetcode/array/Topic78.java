@@ -26,7 +26,7 @@ class Solution78_A {
     }
 }
 
-public class Topic78 extends ArrayMainClass {
+public class Topic78 extends BaseArray {
 
     public static void main(String[] args) throws IOException {
         int[] nums = stringToIntegerArray("[1,2,3]");

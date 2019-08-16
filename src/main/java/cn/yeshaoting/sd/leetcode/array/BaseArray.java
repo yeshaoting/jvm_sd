@@ -2,7 +2,7 @@ package cn.yeshaoting.sd.leetcode.array;
 
 import java.util.List;
 
-public class ArrayMainClass {
+public class BaseArray {
 
     public static int[] stringToIntegerArray(String input) {
         input = input.trim();
