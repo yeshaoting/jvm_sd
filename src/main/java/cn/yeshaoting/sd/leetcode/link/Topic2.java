@@ -13,7 +13,11 @@ package cn.yeshaoting.sd.leetcode.link;
 // 
 //
 
+import com.google.common.collect.Lists;
+import org.apache.commons.lang3.tuple.Pair;
+
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Definition for singly-linked list.
@@ -26,28 +30,54 @@ import java.io.IOException;
 class Topic2 extends BaseLink {
 
     public static void main(String[] args) throws IOException {
-//        一样多
-//        ListNode l1 = stringToListNode("[2,4,3]");
-//        ListNode l2 = stringToListNode("[5,6,4]");
-//        一样多
-        ListNode l1 = stringToListNode("[5]");
-        ListNode l2 = stringToListNode("[5]");
+        List<Pair<String, String>> all = Lists.newArrayList(
+                Pair.of("[2,4,3]", "[5,6,4]"),
+                Pair.of("[2,4]", "[5,6,4]"),
+                Pair.of("[2,4,3]", "[5,6]"),
+                Pair.of("[5]", "[5]")
+        );
 
-        // l1少
-//        ListNode l1 = stringToListNode("[2,4]");
-//        ListNode l2 = stringToListNode("[5,6,4]");
-
-        // l2少
-//        ListNode l1 = stringToListNode("[2,4,3]");
-//        ListNode l2 = stringToListNode("[5,6]");
-
-        ListNode ret = new Topic2().addTwoNumbers(l1, l2);
-
-        String out = listNodeToString(ret);
-
-        System.out.print(out);
+        for (Pair<String, String> pair : all) {
+            ListNode l1 = stringToListNode(pair.getKey());
+            ListNode l2 = stringToListNode(pair.getValue());
+            ListNode ret = new Solution2_B().addTwoNumbers(l1, l2);
+            String out = listNodeToString(ret);
+            System.out.printf("l1=%s\tl2=%s\tout=%s\n", pair.getKey(), pair.getValue(), out);
+        }
     }
 
+}
+
+class Solution2_A {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode head = l1;
+        ListNode pre = null;
+        int carry = 0;
+        while (l1 != null || l2 != null || carry != 0) {
+            // 整理node关系
+            ListNode l1Node = l1 == null ? new ListNode(0) : l1;
+            ListNode l2Node = l2 == null ? new ListNode(0) : l2;
+            if (l1 == null) {
+                pre.next = l1Node;
+            }
+
+            // 处理当前次数值变化
+            int sum = l1Node.val + l2Node.val + carry;
+            l1Node.val = sum % 10;
+            carry = sum / 10;
+
+            // 下次迭代控制
+            pre = l1Node;
+            l1 = l1Node.next;
+            l2 = l2Node.next;
+        }
+
+        return head;
+    }
+}
+
+// FIXME the solution
+class Solution2_B {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode head = l1;
         ListNode pre = null;
