@@ -2,25 +2,12 @@ package cn.yeshaoting.sd.leetcode.link;
 
 import cn.yeshaoting.sd.leetcode.BaseCommon;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 /*
     description:
     author: yeshaoting
     time: 2019-08-15 12:59
 */
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-        val = x;
-    }
-}
-
-public class BaseLink {
+public class BaseLink extends BaseCommon {
 
     public static ListNode stringToListNode(String input) {
         // Generate array from the input
