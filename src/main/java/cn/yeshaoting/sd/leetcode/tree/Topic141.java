@@ -78,4 +78,31 @@ public class Topic141 {
 
         return false;
     }
+
+    // 常量空间；快慢指针
+    public boolean hasCycle2(ListNode head) {
+        if (head == null || head.next == null) {
+            return false;
+        }
+
+        ListNode fastNode = head.next;
+        ListNode slowNode = head;
+        while (true) {
+            if (fastNode == slowNode) {
+                return true;
+            }
+
+            if (fastNode.next == null || fastNode.next.next == null) {
+                return false;
+            }
+
+            if (slowNode.next == null) {
+                return false;
+            }
+
+            fastNode = fastNode.next.next;
+            slowNode = slowNode.next;
+        }
+
+    }
 }
