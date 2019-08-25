@@ -47,7 +47,7 @@ class Topic445 {
         // 循环出栈，结果加和
         int carry = 0;
         ListNode root = null;
-        while (!stack1.isEmpty() || !stack2.isEmpty()) {
+        while (!stack1.isEmpty() || !stack2.isEmpty() || carry != 0) {
             ListNode tmp1 = stack1.isEmpty() ? new ListNode(0) : stack1.pop();
             ListNode tmp2 = stack2.isEmpty() ? new ListNode(0) : stack2.pop();
 
@@ -56,13 +56,6 @@ class Topic445 {
             node.next = root;
             root = node;
             carry = sum / 10;
-        }
-
-        // 处理最后的carry
-        if (carry != 0) {
-            ListNode node = new ListNode(carry);
-            node.next = root;
-            root = node;
         }
 
         return root;
