@@ -1,8 +1,5 @@
 package cn.yeshaoting.sd.leetcode.array;
 
-import javafx.util.Pair;
-import org.apache.commons.collections.CollectionUtils;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,11 +63,11 @@ class Solution78_B {
 
     // 递归法
     public List<List<Integer>> subsets(int[] nums) {
-        subset(nums, new ArrayList<>(), new ArrayList<>());
+        backtrack(nums, new ArrayList<>(), new ArrayList<>());
         return all;
     }
 
-    private void subset(int[] nums, ArrayList<Integer> result, ArrayList<Boolean> used) {
+    private void backtrack(int[] nums, ArrayList<Integer> result, ArrayList<Boolean> used) {
         if (nums.length == used.size()) {
             all.add((List<Integer>) result.clone());
             return;
@@ -83,7 +80,7 @@ class Solution78_B {
                 result.add(nums[used.size() - 1]);
             }
 
-            subset(nums, result, used);
+            backtrack(nums, result, used);
             used.remove(used.size() - 1);
             if (choose) {
                 result.remove(result.size() - 1);
