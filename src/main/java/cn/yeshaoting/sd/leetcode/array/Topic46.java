@@ -49,12 +49,12 @@ class Solution46_A {
     }
 
     private void backtrack(int[] nums, ArrayList<Integer> used) {
-        for (int num : nums) {
-            if (used.size() == nums.length) {
-                all.add((ArrayList<Integer>) used.clone());
-                break;
-            }
+        if (used.size() == nums.length) {
+            all.add((ArrayList<Integer>) used.clone());
+            return;
+        }
 
+        for (int num : nums) {
             if (used.contains(num)) {
                 continue;
             }
