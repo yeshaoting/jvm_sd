@@ -1,5 +1,8 @@
 package cn.yeshaoting.sd.leetcode.array;
 
+import javafx.util.Pair;
+import org.apache.commons.collections.CollectionUtils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +31,9 @@ public class Topic78 extends BaseArray {
 
     public static void main(String[] args) throws IOException {
         int[] nums = stringToIntegerArray("[1,2,3]");
-        List<List<Integer>> ret = new Solution78_A().subsets(nums);
+        List<List<Integer>> ret = new Solution78_B().subsets(nums);
         String out = int2dListToString(ret);
-        System.out.print(out);
+        System.out.printf("size=%s\nout=%s", ret.size(), ret);
     }
 
 }
@@ -54,6 +57,38 @@ class Solution78_A {
         }
 
         return all;
+    }
+}
+
+class Solution78_B {
+
+    List<List<Integer>> all = new ArrayList<List<Integer>>();
+
+    // 递归法
+    public List<List<Integer>> subsets(int[] nums) {
+        subset(nums, new ArrayList<>(), new ArrayList<>());
+        return all;
+    }
+
+    private void subset(int[] nums, ArrayList<Integer> result, ArrayList<Boolean> used) {
+        if (nums.length == used.size()) {
+            all.add((List<Integer>) result.clone());
+            return;
+        }
+
+        for (int i = 0; i <= 1; i++) {
+            boolean choose = i == 0;
+            used.add(choose);
+            if (choose) {
+                result.add(nums[used.size() - 1]);
+            }
+
+            subset(nums, result, used);
+            used.remove(used.size() - 1);
+            if (choose) {
+                result.remove(result.size() - 1);
+            }
+        }
     }
 }
 
