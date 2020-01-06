@@ -16,7 +16,6 @@ package cn.yeshaoting.sd.leetcode.link;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,7 +28,7 @@ import java.util.List;
  */
 class Topic2 extends BaseLink {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         List<Pair<String, String>> all = Lists.newArrayList(
                 Pair.of("[2,4,3]", "[5,6,4]"),
                 Pair.of("[2,4]", "[5,6,4]"),

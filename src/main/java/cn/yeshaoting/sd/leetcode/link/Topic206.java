@@ -11,7 +11,7 @@ import java.util.List;
 */
 public class Topic206 {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         List<String> all = Lists.newArrayList("[1,2,3,4,5]", "[1]", "[1,2,3,4,5,6]", "[1,2]", "[1,2,3]");
         for (String value : all) {
             ListNode head = BaseLink.stringToListNode(value);
