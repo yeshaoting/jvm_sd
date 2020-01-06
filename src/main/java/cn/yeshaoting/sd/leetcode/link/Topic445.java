@@ -17,6 +17,8 @@ package cn.yeshaoting.sd.leetcode.link;
 // 
 //
 
+import cn.yeshaoting.sd.leetcode.ListNode;
+
 import java.util.Stack;
 
 /**

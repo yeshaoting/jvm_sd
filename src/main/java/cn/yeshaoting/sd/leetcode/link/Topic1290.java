@@ -50,8 +50,8 @@ package cn.yeshaoting.sd.leetcode.link;
 // 
 // Related Topics 位运算 链表
 
+import cn.yeshaoting.sd.leetcode.ListNode;
 import com.google.common.collect.Lists;
-import com.sun.xml.internal.rngom.parse.host.Base;
 
 import java.util.List;
 

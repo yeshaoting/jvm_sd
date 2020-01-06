@@ -38,11 +38,9 @@
 // 你能用 O(1)（即，常量）内存解决此问题吗？ 
 //
 
-import cn.yeshaoting.sd.leetcode.link.ListNode;
+import cn.yeshaoting.sd.leetcode.ListNode;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**

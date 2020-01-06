@@ -1,6 +1,7 @@
 package cn.yeshaoting.sd.leetcode.link;
 
 import cn.yeshaoting.sd.leetcode.BaseCommon;
+import cn.yeshaoting.sd.leetcode.ListNode;
 import com.google.common.collect.Lists;
 
 import java.util.List;

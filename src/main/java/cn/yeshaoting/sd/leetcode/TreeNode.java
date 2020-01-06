@@ -1,4 +1,4 @@
-package cn.yeshaoting.sd.leetcode.tree;
+package cn.yeshaoting.sd.leetcode;
 
 /*
     description:

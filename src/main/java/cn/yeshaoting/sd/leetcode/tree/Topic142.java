@@ -39,11 +39,9 @@ package cn.yeshaoting.sd.leetcode.tree;//给定一个链表，返回链表开始
 //你是否可以不用额外空间解决此题？ 
 //
 
-import cn.yeshaoting.sd.leetcode.link.ListNode;
+import cn.yeshaoting.sd.leetcode.ListNode;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**

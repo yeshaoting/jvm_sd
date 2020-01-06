@@ -17,7 +17,7 @@
 // 返回它的最小深度 2. 
 //
 
-import cn.yeshaoting.sd.leetcode.tree.TreeNode;
+import cn.yeshaoting.sd.leetcode.TreeNode;
 
 /**
  * Definition for a binary tree node.

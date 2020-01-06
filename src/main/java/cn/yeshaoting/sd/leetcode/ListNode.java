@@ -1,4 +1,4 @@
-package cn.yeshaoting.sd.leetcode.link;
+package cn.yeshaoting.sd.leetcode;
 
 public class ListNode {
     public int val;

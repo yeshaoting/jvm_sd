@@ -16,6 +16,8 @@ package cn.yeshaoting.sd.leetcode.tree;//给定一个二叉树，找出其最大
 // 返回它的最大深度 3 。 
 //
 
+import cn.yeshaoting.sd.leetcode.TreeNode;
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
