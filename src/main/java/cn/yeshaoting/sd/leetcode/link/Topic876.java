@@ -32,54 +32,39 @@ package cn.yeshaoting.sd.leetcode.link;
 // Related Topics 链表
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 
 import java.util.List;
-import java.util.Set;
 
 /*
     description:
     author: yeshaoting
 */
-public class Topic876 extends BaseLink {
+public class Topic876 {
 
     public static void main(String[] args) {
         List<String> all = Lists.newArrayList("[1,2,3,4,5]", "[1]", "[1,2,3,4,5,6]", "[1,2]", "[1,2,3]");
         for (String value : all) {
-            ListNode head = stringToListNode(value);
-            ListNode result = Solution.middleNode(head);
-            System.out.printf("%d\t%s\n", result.val, value);
+            ListNode head = BaseLink.stringToListNode(value);
+            ListNode result = new Solution().middleNode(head);
+            System.out.printf("%s\t%s\n", result.val, value);
         }
     }
 
-}
+    static class Solution {
+        public ListNode middleNode(ListNode head) {
+            ListNode fast = head;
+            ListNode low = head;
+            while (true) {
+                if (fast == null || fast.next == null) {
+                    break;
+                }
 
-
-//leetcode submit region begin(Prohibit modification and deletion)
-
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- * int val;
- * ListNode next;
- * ListNode(int x) { val = x; }
- * }
- */
-class Solution {
-    public static ListNode middleNode(ListNode head) {
-        ListNode fast = head;
-        ListNode low = head;
-        while (true) {
-            if (fast == null || fast.next == null) {
-                break;
+                low = low.next;
+                fast = fast.next.next;
             }
 
-            low = low.next;
-            fast = fast.next.next;
+            return low;
         }
-
-        return low;
     }
-}
-//leetcode submit region end(Prohibit modification and deletion)
 
+}

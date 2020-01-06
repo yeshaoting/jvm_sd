@@ -50,49 +50,52 @@ package cn.yeshaoting.sd.leetcode.link;
 // 
 // Related Topics 位运算 链表
 
+import com.google.common.collect.Lists;
+import com.sun.xml.internal.rngom.parse.host.Base;
+
+import java.util.List;
+
 /*
     description:
     author: yeshaoting
 */
-public class Topic1290 extends BaseLink {
+public class Topic1290 {
 
     public static void main(String[] args) {
-//        Solution_A solution = new Solution_A();
-        Solution_B solution = new Solution_B();
-
-//        ListNode head = stringToListNode("[1,0,1]");
-        ListNode head = stringToListNode("[1,0,0,1,0,0,1,1,1,0,0,0,0,0,0]");
-        int result = solution.getDecimalValue(head);
-        System.out.println(result);
+        List<String> all = Lists.newArrayList("[1,0,1]", "[1,0,0,1,0,0,1,1,1,0,0,0,0,0,0]");
+        for (String value : all) {
+            ListNode head = BaseLink.stringToListNode(value);
+            int result = new Solution2().getDecimalValue(head);
+            System.out.printf("%s\t%s\n", result, value);
+        }
     }
 
-}
+    static class Solution {
 
-class Solution_A {
+        public int getDecimalValue(ListNode head) {
+            int result = 0;
+            ListNode current = head;
+            while (current != null) {
+                result = (result << 1) + current.val;
+                current = current.next;
+            }
 
-    public int getDecimalValue(ListNode head) {
-        int result = 0;
-        ListNode current = head;
-        while (current != null) {
-            result = (result << 1) + current.val;
-            current = current.next;
+            return result;
         }
-
-        return result;
     }
-}
 
-class Solution_B {
+    static class Solution2 extends Solution {
 
-    public int getDecimalValue(ListNode head) {
-        String result = "";
-        ListNode current = head;
-        while (current != null) {
-            result = result + current.val;
-            current = current.next;
+        public int getDecimalValue(ListNode head) {
+            String result = "";
+            ListNode current = head;
+            while (current != null) {
+                result = result + current.val;
+                current = current.next;
+            }
+
+            return Integer.valueOf(result, 2);
         }
-
-        return Integer.valueOf(result, 2);
     }
 }
 

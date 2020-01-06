@@ -1,6 +1,8 @@
 package cn.yeshaoting.sd.leetcode.link;
 
-import java.io.IOException;
+import com.google.common.collect.Lists;
+
+import java.util.List;
 
 /*
     description:
@@ -9,56 +11,55 @@ import java.io.IOException;
 */
 public class Topic206 {
 
-    public static void main(String[] args) throws IOException {
-        String line = "[1,2,3,4,5]";
-        ListNode head = BaseLink.stringToListNode(line);
-
-        ListNode ret = new Solution206_A().reverseList(head);
-        String out = BaseLink.listNodeToString(ret);
-        System.out.print(out);
+    public static void main(String[] args) throws Exception {
+        List<String> all = Lists.newArrayList("[1,2,3,4,5]", "[1]", "[1,2,3,4,5,6]", "[1,2]", "[1,2,3]");
+        for (String value : all) {
+            ListNode head = BaseLink.stringToListNode(value);
+            ListNode result = new Solution().reverseList(head);
+            System.out.printf("%s\t%s\n", result.val, value);
+        }
     }
 
-}
+    static class Solution {
 
-class Solution206_A {
+        public ListNode reverseList(ListNode head) {
+            if (head == null) {
+                return null;
+            }
 
-    public ListNode reverseList(ListNode head) {
-        if (head == null) {
-            return null;
+            return reverseNode(head, head.next);
         }
 
-        return reverseNode(head, head.next);
+        public ListNode reverseNode(ListNode pre, ListNode cur) {
+            if (cur == null) {
+                return pre;
+            }
+
+            ListNode tail = reverseNode(cur, cur.next);
+            cur.next = pre;
+            pre.next = null;
+            return tail;
+        }
     }
 
-    public ListNode reverseNode(ListNode pre, ListNode cur) {
-        if (cur == null) {
+    static class Solution2 {
+
+        public ListNode reverseList(ListNode head) {
+            if (head == null) {
+                return null;
+            }
+
+            ListNode pre = null;
+            ListNode cur = head;
+            while (cur != null) {
+                ListNode next = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = next;
+            }
+
             return pre;
         }
 
-        ListNode tail = reverseNode(cur, cur.next);
-        cur.next = pre;
-        pre.next = null;
-        return tail;
     }
-}
-
-class Solution206_B {
-
-    public ListNode reverseList(ListNode head) {
-        if (head == null) {
-            return null;
-        }
-
-        ListNode pre = null;
-        ListNode cur = head;
-        while (cur != null) {
-            ListNode next = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = next;
-        }
-
-        return pre;
-    }
-
 }

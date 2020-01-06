@@ -1,6 +1,9 @@
 package cn.yeshaoting.sd.leetcode.link;
 
 import cn.yeshaoting.sd.leetcode.BaseCommon;
+import com.google.common.collect.Lists;
+
+import java.util.List;
 
 /*
     description:
@@ -8,6 +11,15 @@ import cn.yeshaoting.sd.leetcode.BaseCommon;
     time: 2019-08-15 12:59
 */
 public class BaseLink extends BaseCommon {
+
+    public static List<ListNode> stringToListNodes(String... inputs) {
+        List<ListNode> all = Lists.newArrayList();
+        for (String input : inputs) {
+            all.add(stringToListNode(input));
+        }
+
+        return all;
+    }
 
     public static ListNode stringToListNode(String input) {
         // Generate array from the input
